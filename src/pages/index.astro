@@ -1,0 +1,28 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Hero from '@components/Hero.astro';
+import NewArrivals from '@components/NewArrivals.astro';
+import ValueProps from '@components/ValueProps.astro';
+import FeaturedPieces from '@components/FeaturedPieces.astro';
+import RoomTiles from '@components/RoomTiles.astro';
+import ReviewsStrip from '@components/ReviewsStrip.astro';
+import VisitBlock from '@components/VisitBlock.astro';
+import SiteFooter from '@components/SiteFooter.astro';
+import DemoNotice from '@components/DemoNotice.astro';
+---
+<Layout>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <NewArrivals />
+    <ValueProps />
+    <FeaturedPieces />
+    <RoomTiles />
+    <ReviewsStrip />
+    <VisitBlock />
+  </main>
+  <SiteFooter />
+  <DemoNotice />
+</Layout>

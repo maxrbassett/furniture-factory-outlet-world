@@ -1,0 +1,43 @@
+---
+import * as site from '@data/site';
+---
+<section class="relative overflow-hidden bg-cream-deep">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 md:py-20">
+    <div>
+      <p class="font-display text-sm font-600 uppercase tracking-[0.18em] text-brass-600">{site.heroEyebrow}</p>
+      <h1 class="mt-3 font-display text-4xl font-700 leading-[1.05] text-walnut-700 sm:text-5xl lg:text-6xl">
+        {site.heroTagline}
+      </h1>
+      <p class="mt-5 max-w-prose text-lg leading-relaxed text-ink-soft">{site.heroSubhead}</p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="/catalog" class="rounded-full bg-brass-500 px-6 py-3 font-700 text-walnut-900 shadow-lg shadow-brass-500/30 transition-colors hover:bg-brass-400">
+          Browse the catalog
+        </a>
+        <a href="/#rooms" class="rounded-full border border-walnut-600 px-6 py-3 font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">
+          Shop by room
+        </a>
+      </div>
+      <p class="mt-4 text-xs text-ink-soft/70">Outlet pricing, delivery &amp; financing details are placeholders pending confirmation.</p>
+    </div>
+
+    <div class="relative">
+      <div class="aspect-[4/3] w-full overflow-hidden rounded-2xl border border-line bg-oat">
+        <svg viewBox="0 0 480 360" preserveAspectRatio="xMidYMid slice" class="h-full w-full" role="img" aria-label="Placeholder editorial hero photo of a styled living room">
+          <rect width="480" height="360" fill="#efe6d6" />
+          <rect y="250" width="480" height="110" fill="#e8dcc6" />
+          <g fill="#8a6549" opacity="0.85">
+            <rect x="120" y="170" width="240" height="80" rx="16" />
+            <rect x="104" y="135" width="44" height="115" rx="16" />
+            <rect x="332" y="135" width="44" height="115" rx="16" />
+            <rect x="150" y="145" width="180" height="46" rx="12" fill="#a6722c" />
+          </g>
+          <rect x="60" y="70" width="60" height="120" rx="8" fill="#8a9a7b" opacity="0.7" />
+          <circle cx="400" cy="90" r="34" fill="#c08a3e" opacity="0.55" />
+        </svg>
+      </div>
+      <span class="absolute left-3 top-3 rounded-full bg-walnut-800/85 px-3 py-1.5 text-xs font-600 text-cream">
+        PLACEHOLDER — replace with owner showroom photo
+      </span>
+    </div>
+  </div>
+</section>

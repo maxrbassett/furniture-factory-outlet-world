@@ -1,0 +1,46 @@
+---
+/**
+ * Homepage "Just In" strip (POC / demo).
+ *
+ * Empty at build time; populated client-side from the New Arrivals store
+ * (localStorage) that the Quick-Add tool writes to. The whole section hides
+ * itself when nothing has been published, so it stays invisible until the
+ * owner has used the tool in the demo.
+ */
+---
+<section id="just-in" class="hidden bg-cream py-14 sm:py-20" data-newarrivals-section>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <p class="font-display text-sm font-600 uppercase tracking-[0.18em] text-sage-700">Fresh off the truck</p>
+        <h2 class="mt-2 font-display text-3xl font-700 text-walnut-700 sm:text-4xl">Just in</h2>
+        <p class="mt-2 text-ink-soft">The newest pieces to hit the floor — added straight from the store's phone.</p>
+      </div>
+      <a href="/catalog" class="rounded-full border border-walnut-600 px-5 py-2.5 text-sm font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">
+        See everything
+      </a>
+    </div>
+    <div id="just-in-grid" class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"></div>
+  </div>
+</section>
+
+<script>
+  import { getPublished, buildCard } from '../scripts/newArrivals';
+
+  const section = document.getElementById('just-in');
+  const grid = document.getElementById('just-in-grid');
+
+  function render() {
+    if (!section || !grid) return;
+    const items = getPublished().slice(0, 4); // newest first, cap the strip
+    if (!items.length) {
+      section.classList.add('hidden');
+      return;
+    }
+    grid.innerHTML = '';
+    for (const item of items) grid.appendChild(buildCard(item));
+    section.classList.remove('hidden');
+  }
+
+  render();
+</script>

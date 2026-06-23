@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#f2e9d7"/>
+  <rect y="450" width="800" height="150" fill="#d8c39c"/>
+  <!-- round dining table silhouette -->
+  <g fill="#ad9263">
+    <ellipse cx="400" cy="250" rx="210" ry="60"/>
+    <rect x="300" y="250" width="22" height="200"/>
+    <rect x="478" y="250" width="22" height="200"/>
+    <rect x="250" y="430" width="120" height="16" rx="6"/>
+    <rect x="430" y="430" width="120" height="16" rx="6"/>
+    <ellipse cx="400" cy="244" rx="210" ry="54" fill="#d8c39c"/>
+  </g>
+  <!-- post-it price sticker -->
+  <g transform="rotate(-7 400 250)">
+    <rect x="340" y="205" width="120" height="100" fill="#ffe14d" stroke="#e6c200" stroke-width="2"/>
+    <rect x="340" y="205" width="120" height="15" fill="#f4d63b"/>
+    <text x="400" y="270" font-family="Comic Sans MS, Marker Felt, cursive" font-size="40" font-weight="700" fill="#1d1a12" text-anchor="middle">$320</text>
+  </g>
+  <text x="400" y="560" font-family="Georgia, serif" font-size="20" fill="#6b5d4a" text-anchor="middle" font-style="italic">sample photo — round oak dining table</text>
+</svg>

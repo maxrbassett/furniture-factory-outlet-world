@@ -1,0 +1,22 @@
+---
+import { inventory } from '@data/inventory';
+import ProductCard from './ProductCard.astro';
+
+const featured = inventory.filter((p) => p.featured).slice(0, 8);
+---
+<section id="featured" class="bg-cream-deep py-14 sm:py-20">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div class="max-w-2xl">
+        <p class="font-display text-sm font-600 uppercase tracking-[0.18em] text-brass-600">Shop the look</p>
+        <h2 class="mt-2 font-display text-3xl font-700 text-walnut-700 sm:text-4xl">Featured pieces this season</h2>
+      </div>
+      <a href="/catalog" class="rounded-full border border-walnut-600 px-5 py-2.5 text-sm font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">
+        See all in the catalog
+      </a>
+    </div>
+    <div class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {featured.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Placeholder social share image">
+  <rect width="1200" height="630" fill="#f7f1e8"/>
+  <rect x="40" y="40" width="1120" height="550" rx="20" fill="none" stroke="#cdb29b" stroke-width="3" stroke-dasharray="14 12"/>
+  <text x="600" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="64" fill="#4a342a" font-weight="bold">Furniture Factory Outlet World</text>
+  <text x="600" y="350" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" fill="#6b4a38">Beautiful rooms, factory-direct prices.</text>
+  <text x="600" y="470" text-anchor="middle" font-family="system-ui, sans-serif" font-size="26" fill="#a6722c">PLACEHOLDER — replace with owner photo / branded share image</text>
+</svg>

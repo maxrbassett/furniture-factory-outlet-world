@@ -1,0 +1,37 @@
+---
+import type { Product } from '@data/inventory';
+import { formatPrice } from '@data/inventory';
+import ProductPlaceholder from './ProductPlaceholder.astro';
+
+const { product } = Astro.props as { product: Product };
+---
+<article class="group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper shadow-sm transition-shadow hover:shadow-md">
+  <a href={`/product/${product.id}`} class="block focus-visible:outline-none">
+    <div class="relative">
+      <ProductPlaceholder name={product.name} category={product.category} color={product.color} />
+      {product.featured && (
+        <span class="absolute right-2 top-2 rounded-full bg-brass-500 px-2.5 py-1 text-[10px] font-700 uppercase tracking-wide text-walnut-900">Featured</span>
+      )}
+    </div>
+  </a>
+  <div class="flex flex-1 flex-col p-4">
+    <div class="flex items-start justify-between gap-2">
+      <h3 class="font-display text-base font-700 leading-snug text-walnut-700">
+        <a href={`/product/${product.id}`} class="hover:underline">{product.name}</a>
+      </h3>
+      <span class="shrink-0 font-display text-base font-700 text-brass-700">{formatPrice(product.price)}</span>
+    </div>
+    <p class="mt-1 text-xs font-600 uppercase tracking-wide text-ink-soft/70">{product.category} · {product.style}</p>
+    <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-soft">{product.blurb}</p>
+    <div class="mt-auto flex items-center justify-between gap-2 pt-4">
+      <span class:list={[
+        'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-600',
+        product.inStock ? 'bg-sage-500/15 text-sage-700' : 'bg-walnut-100 text-walnut-600',
+      ]}>
+        <span class:list={['h-1.5 w-1.5 rounded-full', product.inStock ? 'bg-sage-600' : 'bg-walnut-400']}></span>
+        {product.inStock ? 'In stock' : 'Made to order'}
+      </span>
+      <a href={`/product/${product.id}`} class="text-sm font-600 text-walnut-600 underline-offset-2 hover:underline">View &rarr;</a>
+    </div>
+  </div>
+</article>

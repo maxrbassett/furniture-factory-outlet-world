@@ -1,0 +1,88 @@
+---
+import { categories, roomsList, styles, colors, priceBounds } from '@data/inventory';
+---
+<form id="catalog-filters" class="space-y-6" aria-label="Filter catalog">
+  <div>
+    <label for="f-search" class="block font-display text-sm font-700 text-walnut-700">Search</label>
+    <input
+      type="search"
+      id="f-search"
+      name="q"
+      placeholder="Search sofas, walnut, dining…"
+      class="mt-2 w-full rounded-xl border border-line bg-paper px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-soft/50 focus:border-brass-500"
+      autocomplete="off"
+    />
+  </div>
+
+  <fieldset>
+    <legend class="font-display text-sm font-700 text-walnut-700">Room</legend>
+    <div class="mt-2 space-y-1.5">
+      {roomsList.map((r) => (
+        <label class="flex items-center gap-2.5 text-sm text-ink-soft">
+          <input type="checkbox" name="room" value={r} class="h-4 w-4 rounded border-line text-walnut-600 accent-walnut-600" />
+          {r}
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="font-display text-sm font-700 text-walnut-700">Category</legend>
+    <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5">
+      {categories.map((c) => (
+        <label class="flex items-center gap-2 text-sm text-ink-soft">
+          <input type="checkbox" name="category" value={c} class="h-4 w-4 rounded border-line text-walnut-600 accent-walnut-600" />
+          {c}
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="font-display text-sm font-700 text-walnut-700">Price</legend>
+    <div class="mt-2 flex items-center gap-2">
+      <label class="flex-1">
+        <span class="sr-only">Minimum price</span>
+        <input type="number" name="min" inputmode="numeric" min={priceBounds.min} max={priceBounds.max} placeholder={`$${priceBounds.min}`} class="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" />
+      </label>
+      <span class="text-ink-soft/60" aria-hidden="true">–</span>
+      <label class="flex-1">
+        <span class="sr-only">Maximum price</span>
+        <input type="number" name="max" inputmode="numeric" min={priceBounds.min} max={priceBounds.max} placeholder={`$${priceBounds.max}`} class="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" />
+      </label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="font-display text-sm font-700 text-walnut-700">Style</legend>
+    <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5">
+      {styles.map((s) => (
+        <label class="flex items-center gap-2 text-sm text-ink-soft">
+          <input type="checkbox" name="style" value={s} class="h-4 w-4 rounded border-line text-walnut-600 accent-walnut-600" />
+          {s}
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="font-display text-sm font-700 text-walnut-700">Color</legend>
+    <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5">
+      {colors.map((c) => (
+        <label class="flex items-center gap-2 text-sm text-ink-soft">
+          <input type="checkbox" name="color" value={c} class="h-4 w-4 rounded border-line text-walnut-600 accent-walnut-600" />
+          {c}
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <label class="flex items-center gap-2.5 text-sm font-600 text-ink-soft">
+    <input type="checkbox" name="instock" value="1" class="h-4 w-4 rounded border-line text-walnut-600 accent-walnut-600" />
+    In stock only
+  </label>
+
+  <button type="button" id="f-clear" class="w-full rounded-full border border-walnut-600 px-4 py-2.5 text-sm font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">
+    Clear all filters
+  </button>
+</form>

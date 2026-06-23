@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#f1e7d6"/>
+  <rect y="440" width="800" height="160" fill="#d9c6a8"/>
+  <!-- dresser silhouette -->
+  <g fill="#4a342a">
+    <rect x="250" y="160" width="300" height="290" rx="10"/>
+    <rect x="270" y="180" width="260" height="56" rx="6" fill="#8a6549"/>
+    <rect x="270" y="246" width="260" height="56" rx="6" fill="#8a6549"/>
+    <rect x="270" y="312" width="260" height="56" rx="6" fill="#8a6549"/>
+    <rect x="270" y="378" width="260" height="52" rx="6" fill="#8a6549"/>
+    <circle cx="390" cy="208" r="6" fill="#e7d6c6"/><circle cx="410" cy="208" r="6" fill="#e7d6c6"/>
+    <circle cx="390" cy="274" r="6" fill="#e7d6c6"/><circle cx="410" cy="274" r="6" fill="#e7d6c6"/>
+    <circle cx="390" cy="340" r="6" fill="#e7d6c6"/><circle cx="410" cy="340" r="6" fill="#e7d6c6"/>
+  </g>
+  <!-- post-it price sticker -->
+  <g transform="rotate(5 600 230)">
+    <rect x="540" y="180" width="120" height="100" fill="#ffe14d" stroke="#e6c200" stroke-width="2"/>
+    <rect x="540" y="180" width="120" height="15" fill="#f4d63b"/>
+    <text x="600" y="245" font-family="Comic Sans MS, Marker Felt, cursive" font-size="40" font-weight="700" fill="#1d1a12" text-anchor="middle">$275</text>
+  </g>
+  <text x="400" y="560" font-family="Georgia, serif" font-size="20" fill="#6b5d4a" text-anchor="middle" font-style="italic">sample photo — walnut 6-drawer dresser</text>
+</svg>

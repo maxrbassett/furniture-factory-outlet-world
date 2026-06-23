@@ -1,0 +1,358 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import SiteFooter from '@components/SiteFooter.astro';
+
+const title = 'Add New Arrivals | Furniture Factory Outlet World';
+const description =
+  'Owner tool (demo): snap your inventory photos, let it read the price off the sticker and write the listing, then publish to your website in one tap.';
+---
+<Layout title={title} description={description}>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <Nav />
+  <main id="main" class="bg-cream">
+    <!-- Header -->
+    <div class="border-b border-line bg-cream-deep">
+      <div class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+        <p class="font-display text-sm font-600 uppercase tracking-[0.18em] text-brass-600">Owner tool · demo</p>
+        <h1 class="mt-2 font-display text-3xl font-700 text-walnut-700 sm:text-4xl">Add today's arrivals</h1>
+        <p class="mt-3 max-w-2xl text-ink-soft">
+          Take photos like you always do — sticker price and all. Drop them here and the tool reads the
+          price off each sticker and writes the listing for you. Glance, tweak if you like, and publish
+          to your website. <span class="font-600 text-walnut-700">Same routine, now it builds your site.</span>
+        </p>
+        <!-- Stepper -->
+        <ol class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm font-600 text-ink-soft">
+          <li data-step-label="1" class="step-label flex items-center gap-2"><span class="step-dot inline-flex h-6 w-6 items-center justify-center rounded-full bg-brass-500 text-walnut-900">1</span> Add photos</li>
+          <li aria-hidden="true" class="text-line">→</li>
+          <li data-step-label="2" class="step-label flex items-center gap-2"><span class="step-dot inline-flex h-6 w-6 items-center justify-center rounded-full bg-walnut-100 text-walnut-600">2</span> Review listings</li>
+          <li aria-hidden="true" class="text-line">→</li>
+          <li data-step-label="3" class="step-label flex items-center gap-2"><span class="step-dot inline-flex h-6 w-6 items-center justify-center rounded-full bg-walnut-100 text-walnut-600">3</span> Publish</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-3xl px-4 py-8 sm:px-6">
+      <!-- STEP 1: Upload -->
+      <section id="step-upload" aria-label="Add photos">
+        <div
+          id="dropzone"
+          class="rounded-2xl border-2 border-dashed border-line bg-paper px-6 py-12 text-center transition-colors"
+        >
+          <svg class="mx-auto h-12 w-12 text-brass-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M3 16.5V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2.5M7 9l5-5 5 5M12 4v12" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h2 class="mt-4 font-display text-xl font-700 text-walnut-700">Drop today's photos here</h2>
+          <p class="mx-auto mt-2 max-w-md text-sm text-ink-soft">
+            Add as many as you like — one per piece, sticker price showing. Or try it with our sample shots.
+          </p>
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <label class="cursor-pointer rounded-full bg-brass-500 px-5 py-2.5 text-sm font-700 text-walnut-900 transition-colors hover:bg-brass-400">
+              Choose photos
+              <input id="file-input" type="file" accept="image/*" multiple class="sr-only" />
+            </label>
+            <button id="use-samples" type="button" class="rounded-full border border-walnut-600 px-5 py-2.5 text-sm font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">
+              Use sample photos
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2: Review -->
+      <section id="step-review" class="hidden" aria-label="Review listings">
+        <div id="reading-state" class="rounded-2xl border border-line bg-paper px-6 py-12 text-center">
+          <div class="mx-auto h-9 w-9 animate-spin rounded-full border-[3px] border-line border-t-brass-500" role="status" aria-label="Reading photos"></div>
+          <p class="mt-4 font-display text-lg font-700 text-walnut-700">Reading your photos…</p>
+          <p class="mt-1 text-sm text-ink-soft">Finding the price on each sticker and writing the listings.</p>
+        </div>
+
+        <div id="review-content" class="hidden">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="font-display text-2xl font-700 text-walnut-700"><span id="review-count">0</span> listings ready</h2>
+            <button id="add-more" type="button" class="text-sm font-600 text-walnut-600 underline-offset-2 hover:underline">+ Add more photos</button>
+          </div>
+          <p class="mt-2 text-sm text-ink-soft">
+            Each piece below was filled in from its photo. Edit anything that's off, then publish.
+          </p>
+
+          <div id="review-list" class="mt-6 space-y-5"></div>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <button id="publish-btn" type="button" class="rounded-full bg-brass-500 px-6 py-3 text-sm font-700 text-walnut-900 transition-colors hover:bg-brass-400">
+              Publish to New Arrivals
+            </button>
+            <span class="text-sm text-ink-soft">Posts to your website's New Arrivals &amp; catalog instantly.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3: Success -->
+      <section id="step-done" class="hidden" aria-label="Published">
+        <div class="rounded-2xl border border-sage-500/40 bg-sage-500/10 px-6 py-12 text-center">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-sage-600 text-cream">
+            <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h2 class="mt-4 font-display text-2xl font-700 text-walnut-700"><span id="done-count">0</span> pieces are live</h2>
+          <p class="mx-auto mt-2 max-w-md text-sm text-ink-soft">
+            They're posted to your <strong>New Arrivals</strong> and searchable in the catalog right now —
+            shoppers can find them by room, price and style.
+          </p>
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <a href="/#just-in" class="rounded-full bg-brass-500 px-5 py-2.5 text-sm font-700 text-walnut-900 transition-colors hover:bg-brass-400">See them on the homepage</a>
+            <a href="/catalog" class="rounded-full border border-walnut-600 px-5 py-2.5 text-sm font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">View in catalog</a>
+            <button id="add-another" type="button" class="rounded-full px-5 py-2.5 text-sm font-600 text-walnut-600 underline-offset-2 hover:underline">Add another batch</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- "In the live version" explainer -->
+      <aside class="mt-12 rounded-2xl border border-line bg-paper p-6">
+        <h2 class="font-display text-lg font-700 text-walnut-700">In the live version</h2>
+        <ul class="mt-3 space-y-2.5 text-sm leading-relaxed text-ink-soft">
+          <li class="flex gap-2.5"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brass-500"></span> The price is read straight off your sticker automatically — no typing.</li>
+          <li class="flex gap-2.5"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brass-500"></span> One tap publishes to your website <em>and</em> cross-posts to Facebook, so you post once instead of twice.</li>
+          <li class="flex gap-2.5"><span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-brass-500"></span> Runs on a small AI vision model — about a half-cent per photo, a few dollars a month for a busy week-to-week shop.</li>
+        </ul>
+        <p class="mt-4 text-xs text-ink-soft/70">
+          This demo fills listings from canned sample data so it costs nothing to show — the real tool reads your actual photos.
+          <button id="reset-demo" type="button" class="ml-1 underline underline-offset-2 hover:text-walnut-600">Reset demo data</button>
+        </p>
+      </aside>
+    </div>
+  </main>
+  <SiteFooter />
+</Layout>
+
+<script>
+  import { addPublished, clearPublished, fileToDataURL, type NewArrival } from '../scripts/newArrivals';
+
+  // Option lists mirror src/data/inventory.ts (kept inline to keep the bundle lean).
+  const CATEGORIES = ['Sofas', 'Sectionals', 'Beds', 'Dining Sets', 'Recliners', 'Tables', 'Dressers', 'Mattresses', 'Outdoor', 'Office'];
+  const COLORS = ['Walnut', 'Espresso', 'Oatmeal', 'Charcoal', 'Sage', 'Cognac', 'Natural', 'Slate', 'Cream', 'Navy'];
+
+  // Canned "AI" results, applied to photos in order (cycles if there are more photos).
+  type Canned = Omit<NewArrival, 'id' | 'img' | 'addedAt'>;
+  const CANNED: Canned[] = [
+    { name: 'Power Reclining Sofa', category: 'Recliners', room: 'Living Room', price: 450, style: 'Transitional', color: 'Charcoal', material: 'Microfiber', dimensions: '84 x 38 x 40', inStock: true, featured: false, blurb: 'A cushy power-reclining sofa in charcoal — gently used and in great shape.' },
+    { name: 'Walnut 6-Drawer Dresser', category: 'Dressers', room: 'Bedroom', price: 275, style: 'Traditional', color: 'Walnut', material: 'Solid wood', dimensions: '58 x 18 x 32', inStock: true, featured: false, blurb: 'A solid walnut six-drawer dresser with dovetail joints and smooth-gliding drawers.' },
+    { name: 'Round Oak Dining Table', category: 'Tables', room: 'Dining', price: 320, style: 'Farmhouse', color: 'Natural', material: 'Oak', dimensions: '48 dia x 30', inStock: true, featured: false, blurb: 'A round natural-oak table that seats four — a warm centerpiece for the kitchen.' },
+    { name: 'Velvet Accent Chair', category: 'Sofas', room: 'Living Room', price: 145, style: 'Mid-Century', color: 'Sage', material: 'Velvet', dimensions: '30 x 32 x 33', inStock: true, featured: false, blurb: 'A sage velvet accent chair on tapered legs — a pop of color for any corner.' },
+    { name: 'Queen Platform Bed', category: 'Beds', room: 'Bedroom', price: 390, style: 'Modern', color: 'Espresso', material: 'Engineered wood', dimensions: '64 x 86 x 45', inStock: true, featured: false, blurb: 'A clean espresso queen frame with an upholstered headboard. Hardware included.' },
+    { name: 'Industrial Coffee Table', category: 'Tables', room: 'Living Room', price: 120, style: 'Industrial', color: 'Slate', material: 'Metal & wood', dimensions: '44 x 22 x 18', inStock: true, featured: false, blurb: 'An industrial coffee table with a slate finish and a lower storage shelf.' },
+  ];
+
+  const SAMPLES = ['/samples/sofa.svg', '/samples/dresser.svg', '/samples/table.svg'];
+
+  type Photo = { src: string; file?: File };
+  let photos: Photo[] = [];
+
+  // --- Elements ---
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+  const stepUpload = $('step-upload');
+  const stepReview = $('step-review');
+  const stepDone = $('step-done');
+  const readingState = $('reading-state');
+  const reviewContent = $('review-content');
+  const reviewList = $('review-list');
+  const reviewCount = $('review-count');
+  const fileInput = $<HTMLInputElement>('file-input');
+  const dropzone = $('dropzone');
+
+  function slugify(s: string) {
+    return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  function setStep(active: 1 | 2 | 3) {
+    document.querySelectorAll<HTMLElement>('.step-label').forEach((el) => {
+      const n = Number(el.dataset.stepLabel);
+      const dot = el.querySelector('.step-dot');
+      const on = n <= active;
+      dot?.classList.toggle('bg-brass-500', on);
+      dot?.classList.toggle('text-walnut-900', on);
+      dot?.classList.toggle('bg-walnut-100', !on);
+      dot?.classList.toggle('text-walnut-600', !on);
+    });
+  }
+
+  // --- Step 1 → 2 ---
+  function startReview() {
+    if (!photos.length) return;
+    stepUpload.classList.add('hidden');
+    stepDone.classList.add('hidden');
+    stepReview.classList.remove('hidden');
+    readingState.classList.remove('hidden');
+    reviewContent.classList.add('hidden');
+    setStep(2);
+    stepReview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Simulated "AI reading" delay.
+    window.setTimeout(renderReview, 1200);
+  }
+
+  function optionHtml(values: string[], selected: string) {
+    return values
+      .map((v) => `<option value="${v}"${v === selected ? ' selected' : ''}>${v}</option>`)
+      .join('');
+  }
+
+  function renderReview() {
+    readingState.classList.add('hidden');
+    reviewContent.classList.remove('hidden');
+    reviewList.innerHTML = '';
+
+    photos.forEach((photo, i) => {
+      const c = CANNED[i % CANNED.length];
+      const card = document.createElement('div');
+      card.className = 'review-card rounded-2xl border border-line bg-paper p-4 sm:flex sm:gap-5';
+      card.innerHTML = `
+        <div class="sm:w-44 sm:shrink-0">
+          <div class="overflow-hidden rounded-xl border border-line" style="aspect-ratio:4 / 3;">
+            <img src="${photo.src}" alt="Uploaded photo" class="h-full w-full object-cover" />
+          </div>
+          <p class="mt-2 inline-flex items-center gap-1.5 text-xs font-600 text-sage-700">
+            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 4.6L19 7l-3.5 3.2L16.5 16 12 13.3 7.5 16l1-5.8L5 7l5.1-.4z"/></svg>
+            Auto-filled from your photo
+          </p>
+        </div>
+        <div class="mt-4 flex-1 sm:mt-0">
+          <label class="block">
+            <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Detected price (read from sticker)</span>
+            <div class="mt-1 flex items-center rounded-xl border border-brass-500/60 bg-brass-500/10 px-3">
+              <span class="font-display text-lg font-700 text-brass-700">$</span>
+              <input data-f="price" type="number" min="0" step="1" value="${c.price}" class="w-full bg-transparent px-1 py-2.5 font-display text-lg font-700 text-walnut-700 focus:outline-none" />
+            </div>
+          </label>
+          <label class="mt-3 block">
+            <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Name</span>
+            <input data-f="name" type="text" value="${c.name.replace(/"/g, '&quot;')}" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none" />
+          </label>
+          <div class="mt-3 grid grid-cols-2 gap-3">
+            <label class="block">
+              <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Category</span>
+              <select data-f="category" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none">${optionHtml(CATEGORIES, c.category)}</select>
+            </label>
+            <label class="block">
+              <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Color</span>
+              <select data-f="color" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none">${optionHtml(COLORS, c.color)}</select>
+            </label>
+          </div>
+          <label class="mt-3 block">
+            <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Description</span>
+            <textarea data-f="blurb" rows="2" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm leading-relaxed text-ink-soft focus:border-brass-500 focus:outline-none">${c.blurb}</textarea>
+          </label>
+          <label class="mt-3 inline-flex items-center gap-2 text-sm font-600 text-walnut-700">
+            <input data-f="instock" type="checkbox" checked class="h-4 w-4 rounded border-line accent-brass-500" />
+            In stock / available now
+          </label>
+        </div>`;
+      // stash hidden fields we don't surface for editing
+      card.dataset.room = c.room;
+      card.dataset.style = c.style;
+      card.dataset.material = c.material;
+      card.dataset.dimensions = c.dimensions;
+      reviewList.appendChild(card);
+    });
+
+    reviewCount.textContent = String(photos.length);
+  }
+
+  // --- Publish ---
+  async function publish() {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.review-card'));
+    const items: NewArrival[] = [];
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const get = (f: string) => card.querySelector<HTMLInputElement>(`[data-f="${f}"]`);
+      const name = get('name')?.value.trim() || `New Arrival ${i + 1}`;
+      const price = Math.max(0, Number(get('price')?.value) || 0);
+      const category = get('category')?.value || 'Sofas';
+      const color = get('color')?.value || 'Oatmeal';
+      const blurb = (card.querySelector<HTMLTextAreaElement>('[data-f="blurb"]')?.value || '').trim();
+      const inStock = get('instock')?.checked ?? true;
+
+      const photo = photos[i];
+      let img = photo.src;
+      // Convert uploaded files to a small data URL so they persist in localStorage.
+      if (photo.file) img = await fileToDataURL(photo.file, 900);
+
+      items.push({
+        id: `${slugify(name)}-${Date.now().toString(36)}-${i}`,
+        name,
+        category,
+        room: card.dataset.room || 'Living Room',
+        price,
+        style: card.dataset.style || 'Transitional',
+        color,
+        material: card.dataset.material || 'Mixed',
+        dimensions: card.dataset.dimensions || '',
+        inStock,
+        featured: false,
+        blurb,
+        img,
+        addedAt: Date.now(),
+      });
+    }
+
+    addPublished(items);
+
+    // Step 3
+    stepReview.classList.add('hidden');
+    stepDone.classList.remove('hidden');
+    $('done-count').textContent = String(items.length);
+    setStep(3);
+    photos = [];
+    stepDone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // --- Photo intake ---
+  function addFiles(files: FileList | File[]) {
+    const list = Array.from(files).filter((f) => f.type.startsWith('image/'));
+    for (const file of list) photos.push({ src: URL.createObjectURL(file), file });
+    if (photos.length) startReview();
+  }
+
+  function useSamples() {
+    photos = SAMPLES.map((src) => ({ src }));
+    startReview();
+  }
+
+  function reset() {
+    photos = [];
+    stepReview.classList.add('hidden');
+    stepDone.classList.add('hidden');
+    stepUpload.classList.remove('hidden');
+    setStep(1);
+    stepUpload.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // --- Wire up ---
+  fileInput.addEventListener('change', () => { if (fileInput.files) addFiles(fileInput.files); });
+  $('use-samples').addEventListener('click', useSamples);
+  $('publish-btn').addEventListener('click', () => { void publish(); });
+  $('add-more').addEventListener('click', reset);
+  $('add-another').addEventListener('click', reset);
+  $('reset-demo').addEventListener('click', () => {
+    clearPublished();
+    const btn = $('reset-demo');
+    btn.textContent = 'Demo data cleared ✓';
+  });
+
+  // Drag & drop
+  ['dragenter', 'dragover'].forEach((ev) =>
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('border-brass-500', 'bg-brass-500/5');
+    }),
+  );
+  ['dragleave', 'drop'].forEach((ev) =>
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-brass-500', 'bg-brass-500/5');
+    }),
+  );
+  dropzone.addEventListener('drop', (e) => {
+    const dt = (e as DragEvent).dataTransfer;
+    if (dt?.files?.length) addFiles(dt.files);
+  });
+</script>

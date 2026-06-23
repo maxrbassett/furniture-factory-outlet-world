@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Furniture Factory Outlet World mark">
+  <rect width="64" height="64" rx="14" fill="#4a342a"/>
+  <!-- stylized armchair monogram in brass -->
+  <g fill="none" stroke="#e0a85a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 30 v-6 a6 6 0 0 1 6 -6 h16 a6 6 0 0 1 6 6 v6"/>
+    <path d="M16 30 a4 4 0 0 1 4 4 v6 h24 v-6 a4 4 0 0 1 4 -4"/>
+    <path d="M20 46 v4 M44 46 v4"/>
+    <path d="M20 40 h24"/>
+  </g>
+</svg>

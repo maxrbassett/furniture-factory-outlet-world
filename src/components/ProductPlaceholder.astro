@@ -1,0 +1,109 @@
+---
+/**
+ * Parametric, deterministic placeholder "photo" for a catalog item.
+ * No real images are used — this draws a tasteful labeled SVG scene so the
+ * catalog reads as stocked while clearly signalling it is a placeholder.
+ * Hue is derived from the item color so cards feel varied but stable.
+ */
+import type { Category } from '@data/inventory';
+
+interface Props {
+  name: string;
+  category: Category;
+  color: string;
+  ratio?: string; // e.g. '4 / 3'
+  showLabel?: boolean;
+  class?: string;
+}
+
+const { name, category, color, ratio = '4 / 3', showLabel = true, class: cls = '' } = Astro.props;
+
+const colorTints: Record<string, [string, string, string]> = {
+  Walnut: ['#e7d6c6', '#8a6549', '#4a342a'],
+  Espresso: ['#ded2c4', '#6b4a38', '#3a2820'],
+  Oatmeal: ['#f1e7d6', '#d9c6a8', '#a6895f'],
+  Charcoal: ['#dcd8d2', '#8b8680', '#3b3833'],
+  Sage: ['#dfe5d6', '#aebaa0', '#6f7e61'],
+  Cognac: ['#ecd6c0', '#c08a3e', '#8a5a26'],
+  Natural: ['#f2e9d7', '#d8c39c', '#ad9263'],
+  Slate: ['#dde0e2', '#9aa3a8', '#5d666b'],
+  Cream: ['#f6efe2', '#e6d8bf', '#c2ac82'],
+  Navy: ['#d4d8e0', '#7f8aa3', '#3c4660'],
+};
+const [bg, mid, deep] = colorTints[color] ?? colorTints.Oatmeal;
+
+// pick a simple icon glyph per category family
+const icons: Record<string, string> = {
+  Sofas: 'sofa', Sectionals: 'sofa', Recliners: 'sofa',
+  Beds: 'bed', Mattresses: 'bed', Dressers: 'dresser',
+  'Dining Sets': 'table', Tables: 'table', Office: 'desk', Outdoor: 'outdoor',
+};
+const icon = icons[category] ?? 'sofa';
+---
+
+<div
+  class={`relative overflow-hidden rounded-[var(--radius-card)] ${cls}`}
+  style={`aspect-ratio:${ratio};`}
+  role="img"
+  aria-label={`Placeholder image for ${name}`}
+>
+  <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
+    <rect width="400" height="300" fill={bg} />
+    <rect y="210" width="400" height="90" fill={mid} opacity="0.35" />
+    {icon === 'sofa' && (
+      <g fill={deep} opacity="0.85">
+        <rect x="96" y="150" width="208" height="70" rx="14" />
+        <rect x="84" y="120" width="40" height="100" rx="14" />
+        <rect x="276" y="120" width="40" height="100" rx="14" />
+        <rect x="120" y="128" width="160" height="40" rx="10" fill={mid} />
+        <rect x="108" y="220" width="14" height="22" />
+        <rect x="278" y="220" width="14" height="22" />
+      </g>
+    )}
+    {icon === 'bed' && (
+      <g fill={deep} opacity="0.85">
+        <rect x="70" y="120" width="40" height="110" rx="6" />
+        <rect x="70" y="170" width="270" height="60" rx="8" />
+        <rect x="110" y="180" width="200" height="34" rx="8" fill={mid} />
+        <rect x="120" y="150" width="80" height="28" rx="8" fill={bg} />
+      </g>
+    )}
+    {icon === 'dresser' && (
+      <g fill={deep} opacity="0.85">
+        <rect x="120" y="110" width="160" height="120" rx="8" />
+        <rect x="134" y="124" width="132" height="28" rx="4" fill={mid} />
+        <rect x="134" y="160" width="132" height="28" rx="4" fill={mid} />
+        <rect x="134" y="196" width="132" height="24" rx="4" fill={mid} />
+      </g>
+    )}
+    {icon === 'table' && (
+      <g fill={deep} opacity="0.85">
+        <rect x="96" y="140" width="208" height="20" rx="6" />
+        <rect x="110" y="160" width="14" height="70" />
+        <rect x="276" y="160" width="14" height="70" />
+        <rect x="150" y="170" width="100" height="40" rx="8" fill={mid} />
+      </g>
+    )}
+    {icon === 'desk' && (
+      <g fill={deep} opacity="0.85">
+        <rect x="100" y="150" width="200" height="16" rx="4" />
+        <rect x="100" y="166" width="80" height="64" rx="4" />
+        <rect x="116" y="178" width="48" height="14" rx="3" fill={mid} />
+        <rect x="288" y="166" width="12" height="64" />
+      </g>
+    )}
+    {icon === 'outdoor' && (
+      <g fill={deep} opacity="0.85">
+        <rect x="110" y="150" width="80" height="70" rx="10" />
+        <rect x="210" y="150" width="80" height="70" rx="10" />
+        <rect x="110" y="135" width="80" height="20" rx="8" fill={mid} />
+        <rect x="210" y="135" width="80" height="20" rx="8" fill={mid} />
+      </g>
+    )}
+  </svg>
+  {showLabel && (
+    <span class="absolute left-2 top-2 rounded-full bg-walnut-800/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-cream">
+      Placeholder photo
+    </span>
+  )}
+</div>

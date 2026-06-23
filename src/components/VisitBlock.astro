@@ -1,0 +1,43 @@
+---
+import * as site from '@data/site';
+---
+<section id="visit" class="bg-cream py-14 sm:py-20">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 md:grid-cols-2">
+    <div>
+      <p class="font-display text-sm font-600 uppercase tracking-[0.18em] text-brass-600">Come see it in person</p>
+      <h2 class="mt-2 font-display text-3xl font-700 text-walnut-700 sm:text-4xl">Visit the outlet</h2>
+      <p class="mt-4 max-w-prose text-ink-soft">{site.wayfinding}</p>
+
+      <div class="mt-6 space-y-4">
+        <div>
+          <h3 class="font-display text-sm font-700 uppercase tracking-wide text-walnut-600">Address</h3>
+          <address class="mt-1 not-italic text-ink-soft">{site.addressOneLine}</address>
+          <p class="mt-1 text-xs text-ink-soft/60">Address is a placeholder — confirm exact location.</p>
+        </div>
+        <div>
+          <h3 class="font-display text-sm font-700 uppercase tracking-wide text-walnut-600">Phone</h3>
+          <a href={`tel:${site.phoneTel}`} class="mt-1 inline-block text-ink-soft underline-offset-2 hover:underline">{site.phone}</a>
+          <p class="mt-1 text-xs text-ink-soft/60">Phone is a placeholder — confirm before launch.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={site.directionsUrl} class="rounded-full bg-walnut-600 px-5 py-2.5 font-600 text-cream hover:bg-walnut-700">Get directions</a>
+        <a href={`tel:${site.phoneTel}`} class="rounded-full border border-walnut-600 px-5 py-2.5 font-600 text-walnut-700 hover:bg-walnut-600 hover:text-cream">Call the store</a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-display text-sm font-700 uppercase tracking-wide text-walnut-600">Hours</h3>
+      <p class="mt-1 text-xs text-ink-soft/60">All hours are placeholders pending confirmation.</p>
+      <dl class="mt-3 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-paper">
+        {site.hoursOrder.map((k) => (
+          <div class="flex items-center justify-between px-5 py-3">
+            <dt class="font-600 text-walnut-700">{site.hours[k].label}</dt>
+            <dd class:list={['text-sm', site.hours[k].open === null ? 'text-ink-soft/60' : 'text-ink-soft']}>{site.hours[k].display}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>

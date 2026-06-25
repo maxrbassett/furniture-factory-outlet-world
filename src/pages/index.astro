@@ -2,7 +2,9 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Hero from '@components/Hero.astro';
+import TrustBar from '@components/TrustBar.astro';
 import NewArrivals from '@components/NewArrivals.astro';
+import ShopByCategory from '@components/ShopByCategory.astro';
 import ValueProps from '@components/ValueProps.astro';
 import FeaturedPieces from '@components/FeaturedPieces.astro';
 import RoomTiles from '@components/RoomTiles.astro';
@@ -16,10 +18,12 @@ import DemoNotice from '@components/DemoNotice.astro';
   <Nav />
   <main id="main">
     <Hero />
+    <TrustBar />
     <NewArrivals />
+    <ShopByCategory />
+    <RoomTiles />
     <ValueProps />
     <FeaturedPieces />
-    <RoomTiles />
     <ReviewsStrip />
     <VisitBlock />
   </main>

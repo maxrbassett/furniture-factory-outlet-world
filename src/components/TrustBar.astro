@@ -1,0 +1,22 @@
+---
+/**
+ * Slim trust band (Tyndall-style) — true, local, family signals directly under
+ * the hero. Copy is single-sourced from site.ts; unverified claims carry
+ * // CONFIRM there. Customer reviews are intentionally NOT faked here — the
+ * placeholder ReviewsStrip stays separate and clearly labeled.
+ */
+import * as site from '@data/site';
+---
+<section aria-label="Why shop with us" class="border-y border-line bg-walnut-700 text-cream">
+  <ul class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-7 gap-y-2 px-4 py-4 text-sm font-600 sm:px-6">
+    {site.trustPoints.map((point, i) => (
+      <li class="flex items-center gap-2.5">
+        {i > 0 && <span aria-hidden="true" class="hidden text-brass-300/50 sm:inline">•</span>}
+        <span class="text-cream/90">{point}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="border-t border-cream/10 px-4 py-2.5 text-center text-xs italic text-cream/70 sm:px-6">
+    {site.heritageLine}
+  </p>
+</section>

@@ -1,10 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Furniture Factory Outlet World mark">
-  <rect width="64" height="64" rx="14" fill="#4a342a"/>
-  <!-- stylized armchair monogram in brass -->
-  <g fill="none" stroke="#e0a85a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 30 v-6 a6 6 0 0 1 6 -6 h16 a6 6 0 0 1 6 6 v6"/>
-    <path d="M16 30 a4 4 0 0 1 4 4 v6 h24 v-6 a4 4 0 0 1 4 -4"/>
-    <path d="M20 46 v4 M44 46 v4"/>
-    <path d="M20 40 h24"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#efb45b"/>
+      <stop offset="100%" stop-color="#d99a43"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#2c201d"/>
+
+  <!-- lightning bolt -->
+  <polygon fill="#6b4635"
+    points="90,820 330,680 305,770 505,610 430,600 650,470 610,560 930,330 780,500 810,410 360,760 390,690" />
+
+  <!-- shield border -->
+  <polygon fill="#3a2a24"
+    points="512,240 760,240 930,512 512,900 94,512 264,240" />
+
+  <!-- shield -->
+  <polygon fill="url(#gold)"
+    points="512,280 720,280 860,512 512,840 164,512 304,280" />
+
+  <!-- F -->
+  <path fill="#3f2b25" d="
+    M430 400
+    L620 400
+    Q640 400 638 420
+    L632 480
+    Q630 500 610 500
+    L500 500
+    L490 600
+    L600 600
+    Q620 600 618 620
+    L612 680
+    Q610 700 590 700
+    L480 700
+    L468 820
+    Q466 840 446 840
+    L380 840
+    Q360 840 362 820
+    L402 430
+    Q404 400 430 400 Z"/>
 </svg>

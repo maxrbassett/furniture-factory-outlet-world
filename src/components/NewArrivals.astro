@@ -1,44 +1,69 @@
 ---
 /**
- * Homepage "Just In" strip (POC / demo).
+ * Homepage "Just In" strip (POC / demo) — the prominent centerpiece.
  *
- * Empty at build time; populated client-side from the New Arrivals store
- * (localStorage) that the Quick-Add tool writes to. The whole section hides
- * itself when nothing has been published, so it stays invisible until the
- * owner has used the tool in the demo.
+ * Sits directly under the hero as a bold dark band so newly-published pieces
+ * are the first thing a visitor sees. Empty at build time; populated
+ * client-side from the New Arrivals store (localStorage) that the Quick-Add
+ * tool writes to, and hides itself entirely when nothing has been published
+ * (so it never shows an empty band).
  */
 ---
-<section id="just-in" class="hidden bg-cream py-14 sm:py-20" data-newarrivals-section>
+<section
+  id="just-in"
+  class="hidden scroll-mt-20 bg-walnut-700 py-16 sm:py-24"
+  data-newarrivals-section
+>
   <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="flex flex-wrap items-end justify-between gap-5">
       <div class="max-w-2xl">
-        <p class="font-display text-sm font-600 uppercase tracking-[0.18em] text-sage-700">Fresh off the truck</p>
-        <h2 class="mt-2 font-display text-3xl font-700 text-walnut-700 sm:text-4xl">Just in</h2>
-        <p class="mt-2 text-ink-soft">The newest pieces to hit the floor — added straight from the store's phone.</p>
+        <span class="inline-flex items-center gap-2 rounded-full bg-brass-500 px-3.5 py-1.5 text-xs font-700 uppercase tracking-wide text-walnut-900">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-walnut-900/50"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-walnut-900"></span>
+          </span>
+          <span id="just-in-badge">Just added</span>
+        </span>
+        <h2 class="mt-4 font-display text-4xl font-700 leading-[1.05] text-cream sm:text-5xl lg:text-6xl">
+          Just in
+        </h2>
+        <p class="mt-4 max-w-xl text-lg leading-relaxed text-cream/80">
+          Fresh off the truck — the newest pieces on the floor, posted straight from the store's phone.
+        </p>
       </div>
-      <a href="/catalog" class="rounded-full border border-walnut-600 px-5 py-2.5 text-sm font-600 text-walnut-700 transition-colors hover:bg-walnut-600 hover:text-cream">
-        See everything
+      <a
+        href="/catalog"
+        class="rounded-full bg-brass-500 px-6 py-3 text-sm font-700 text-walnut-900 shadow-lg shadow-brass-500/20 transition-colors hover:bg-brass-400"
+      >
+        See everything new
       </a>
     </div>
-    <div id="just-in-grid" class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"></div>
+    <div id="just-in-grid" class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"></div>
   </div>
 </section>
 
 <script>
   import { getPublished, buildCard } from '../scripts/newArrivals';
+  import { justInSeed } from '../data/justInSeed';
 
   const section = document.getElementById('just-in');
   const grid = document.getElementById('just-in-grid');
+  const badge = document.getElementById('just-in-badge');
 
   function render() {
     if (!section || !grid) return;
-    const items = getPublished().slice(0, 4); // newest first, cap the strip
-    if (!items.length) {
+    // Seeded real inventory + anything published via the Quick-Add tool.
+    const seen = new Set<string>();
+    const all = [...getPublished(), ...justInSeed]
+      .filter((i) => (seen.has(i.id) ? false : (seen.add(i.id), true)))
+      .sort((a, b) => b.addedAt - a.addedAt);
+    if (!all.length) {
       section.classList.add('hidden');
       return;
     }
+    if (badge) badge.textContent = `${all.length} just added`;
     grid.innerHTML = '';
-    for (const item of items) grid.appendChild(buildCard(item));
+    for (const item of all.slice(0, 8)) grid.appendChild(buildCard(item));
     section.classList.remove('hidden');
   }
 

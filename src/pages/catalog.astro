@@ -98,14 +98,18 @@ const description = 'Browse the full Furniture Factory Outlet World catalog — 
 
 <script>
   import { getPublished, buildCard } from '../scripts/newArrivals';
+  import { justInSeed } from '../data/justInSeed';
 
-  // --- Inject client-side "New Arrivals" (published via the Quick-Add tool) ---
+  // --- Inject "New Arrivals" (seeded real photos + Quick-Add publishes) ---
   // They become regular .catalog-item nodes so search / filter / sort just work.
   const catalogGrid = document.getElementById('catalog-grid');
   if (catalogGrid) {
-    const published = getPublished(); // newest first
-    for (let i = published.length - 1; i >= 0; i--) {
-      catalogGrid.prepend(buildCard(published[i]));
+    const seen = new Set<string>();
+    const inject = [...getPublished(), ...justInSeed].filter(
+      (i) => (seen.has(i.id) ? false : (seen.add(i.id), true)),
+    ); // newest first
+    for (let i = inject.length - 1; i >= 0; i--) {
+      catalogGrid.prepend(buildCard(inject[i]));
     }
   }
 

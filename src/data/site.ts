@@ -39,22 +39,46 @@ export const heroSubhead =
 // --- Navigation ----------------------------------------------------------------
 export const nav = [
   { label: 'Shop Catalog', href: '/catalog' },
+  { label: 'Shop by Category', href: '/#categories' },
   { label: 'Shop by Room', href: '/#rooms' },
   { label: 'Why Outlet', href: '/#value' },
   { label: 'Visit', href: '/#visit' },
 ];
 
-// --- Contact / location --------------------------------------------------------
-// POC: placeholder phone, do NOT present as real. // CONFIRM
-export const phone = '(704) 555-0142';
-export const phoneTel = '+17045550142';
+// --- Promo / announcement bar --------------------------------------------------
+// Their identity IS overstock liquidation + constant fresh finds, so the site-wide
+// promo points at "Just In" (this store's version of "the sale").
+export const promo = {
+  text: 'Overstock Liquidation — fresh arrivals every week',
+  cta: 'See what’s just in',
+  href: '/#just-in',
+};
 
-// POC: approximate location from public sources; street number invented. // CONFIRM
+// --- Trust bar -----------------------------------------------------------------
+// Keep these TRUE. Family-owned + local are safe; delivery specifics are POC.
+export const trustPoints = [
+  'Family-owned & operated', // CONFIRM
+  'Outlet & overstock pricing',
+  'New arrivals every week',
+  'Local delivery in the Waxhaw area', // CONFIRM radius
+];
+
+// Public sources note founder Perry Brown, "the Furniture Man" (TV advertising,
+// family business). Verify wording + that the owner wants to invoke it. // CONFIRM
+export const heritageLine =
+  'A Waxhaw family business — carrying on the legacy of Perry Brown, “the Furniture Man.”';
+
+// --- Contact / location --------------------------------------------------------
+// From public business listings (Facebook / directories). Verify with owner. // CONFIRM
+export const phone = '(704) 843-2128';
+export const phoneTel = '+17048432128';
+
+// From public business listings. Street + city + state matched; verify ZIP. // CONFIRM
 export const address = {
-  street: '0000 Lancaster Hwy', // POC — exact number unknown // CONFIRM
+  street: '8315 Lancaster Hwy',
   city: 'Waxhaw',
   state: 'NC',
-  zip: '28173', // POC // CONFIRM
+  zip: '28173', // public sources; // CONFIRM
 };
 export const addressOneLine = `${address.street}, ${address.city}, ${address.state} ${address.zip}`;
 

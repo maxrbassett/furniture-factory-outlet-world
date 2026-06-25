@@ -71,7 +71,7 @@ const description =
             <h2 class="font-display text-2xl font-700 text-walnut-700"><span id="review-count">0</span> listings ready</h2>
             <button id="add-more" type="button" class="text-sm font-600 text-walnut-600 underline-offset-2 hover:underline">+ Add more photos</button>
           </div>
-          <p class="mt-2 text-sm text-ink-soft">
+          <p id="review-intro" class="mt-2 text-sm text-ink-soft">
             Each piece below was filled in from its photo. Edit anything that's off, then publish.
           </p>
 
@@ -143,7 +143,7 @@ const description =
 
   const SAMPLES = ['/samples/sofa.svg', '/samples/dresser.svg', '/samples/table.svg'];
 
-  type Photo = { src: string; file?: File };
+  type Photo = { src: string; file?: File; sample?: boolean };
   let photos: Photo[] = [];
 
   // --- Elements ---
@@ -200,8 +200,35 @@ const description =
     reviewContent.classList.remove('hidden');
     reviewList.innerHTML = '';
 
+    // The canned "AI read it for you" auto-fill only applies to the bundled
+    // sample photos (where the canned data genuinely matches the image). Real
+    // uploads start blank — there's no live vision model yet, so we don't want
+    // to slap a wrong label on the owner's actual photo.
+    const allSamples = photos.length > 0 && photos.every((p) => p.sample);
+    const intro = document.getElementById('review-intro');
+    if (intro) {
+      intro.textContent = allSamples
+        ? 'Each piece below was filled in from its photo. Edit anything that’s off, then publish.'
+        : 'Add the price and details for each piece, then publish. (In the live version these fill in automatically from the photo.)';
+    }
+
     photos.forEach((photo, i) => {
+      const isSample = !!photo.sample;
       const c = CANNED[i % CANNED.length];
+      const v = isSample
+        ? { name: c.name, category: c.category, room: c.room, price: String(c.price), style: c.style, color: c.color, material: c.material, dimensions: c.dimensions, blurb: c.blurb }
+        : { name: '', category: CATEGORIES[0], room: 'Living Room', price: '', style: 'Transitional', color: COLORS[0], material: 'Mixed', dimensions: '', blurb: '' };
+
+      const badge = isSample
+        ? `<p class="mt-2 inline-flex items-center gap-1.5 text-xs font-600 text-sage-700">
+             <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 4.6L19 7l-3.5 3.2L16.5 16 12 13.3 7.5 16l1-5.8L5 7l5.1-.4z"/></svg>
+             Auto-filled from your photo
+           </p>`
+        : `<p class="mt-2 text-xs font-600 text-ink-soft/70">Your photo — add the details</p>`;
+
+      const priceLabel = isSample ? 'Detected price (read from sticker)' : 'Price';
+      const priceBox = isSample ? 'border-brass-500/60 bg-brass-500/10' : 'border-line bg-cream';
+
       const card = document.createElement('div');
       card.className = 'review-card rounded-2xl border border-line bg-paper p-4 sm:flex sm:gap-5';
       card.innerHTML = `
@@ -209,36 +236,33 @@ const description =
           <div class="overflow-hidden rounded-xl border border-line" style="aspect-ratio:4 / 3;">
             <img src="${photo.src}" alt="Uploaded photo" class="h-full w-full object-cover" />
           </div>
-          <p class="mt-2 inline-flex items-center gap-1.5 text-xs font-600 text-sage-700">
-            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 4.6L19 7l-3.5 3.2L16.5 16 12 13.3 7.5 16l1-5.8L5 7l5.1-.4z"/></svg>
-            Auto-filled from your photo
-          </p>
+          ${badge}
         </div>
         <div class="mt-4 flex-1 sm:mt-0">
           <label class="block">
-            <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Detected price (read from sticker)</span>
-            <div class="mt-1 flex items-center rounded-xl border border-brass-500/60 bg-brass-500/10 px-3">
+            <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">${priceLabel}</span>
+            <div class="mt-1 flex items-center rounded-xl border ${priceBox} px-3">
               <span class="font-display text-lg font-700 text-brass-700">$</span>
-              <input data-f="price" type="number" min="0" step="1" value="${c.price}" class="w-full bg-transparent px-1 py-2.5 font-display text-lg font-700 text-walnut-700 focus:outline-none" />
+              <input data-f="price" type="number" min="0" step="1" value="${v.price}" placeholder="0" class="w-full bg-transparent px-1 py-2.5 font-display text-lg font-700 text-walnut-700 focus:outline-none" />
             </div>
           </label>
           <label class="mt-3 block">
             <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Name</span>
-            <input data-f="name" type="text" value="${c.name.replace(/"/g, '&quot;')}" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none" />
+            <input data-f="name" type="text" value="${v.name.replace(/"/g, '&quot;')}" placeholder="e.g. Walnut 6-drawer dresser" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none" />
           </label>
           <div class="mt-3 grid grid-cols-2 gap-3">
             <label class="block">
               <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Category</span>
-              <select data-f="category" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none">${optionHtml(CATEGORIES, c.category)}</select>
+              <select data-f="category" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none">${optionHtml(CATEGORIES, v.category)}</select>
             </label>
             <label class="block">
               <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Color</span>
-              <select data-f="color" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none">${optionHtml(COLORS, c.color)}</select>
+              <select data-f="color" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm font-600 text-walnut-700 focus:border-brass-500 focus:outline-none">${optionHtml(COLORS, v.color)}</select>
             </label>
           </div>
           <label class="mt-3 block">
             <span class="text-xs font-600 uppercase tracking-wide text-ink-soft/70">Description</span>
-            <textarea data-f="blurb" rows="2" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm leading-relaxed text-ink-soft focus:border-brass-500 focus:outline-none">${c.blurb}</textarea>
+            <textarea data-f="blurb" rows="2" placeholder="A short line shoppers will see…" class="mt-1 w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-sm leading-relaxed text-ink-soft focus:border-brass-500 focus:outline-none">${v.blurb}</textarea>
           </label>
           <label class="mt-3 inline-flex items-center gap-2 text-sm font-600 text-walnut-700">
             <input data-f="instock" type="checkbox" checked class="h-4 w-4 rounded border-line accent-brass-500" />
@@ -246,10 +270,10 @@ const description =
           </label>
         </div>`;
       // stash hidden fields we don't surface for editing
-      card.dataset.room = c.room;
-      card.dataset.style = c.style;
-      card.dataset.material = c.material;
-      card.dataset.dimensions = c.dimensions;
+      card.dataset.room = v.room;
+      card.dataset.style = v.style;
+      card.dataset.material = v.material;
+      card.dataset.dimensions = v.dimensions;
       reviewList.appendChild(card);
     });
 
@@ -313,7 +337,7 @@ const description =
   }
 
   function useSamples() {
-    photos = SAMPLES.map((src) => ({ src }));
+    photos = SAMPLES.map((src) => ({ src, sample: true }));
     startReview();
   }
 

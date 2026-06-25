@@ -110,7 +110,10 @@ export function buildCard(item: NewArrival): HTMLElement {
     <div class="flex flex-1 flex-col p-4">
       <div class="flex items-start justify-between gap-2">
         <h3 class="font-display text-base font-700 leading-snug text-walnut-700">${esc(item.name)}</h3>
-        <span class="shrink-0 font-display text-base font-700 text-brass-700">${formatPrice(item.price)}</span>
+        <span class="shrink-0 text-right">
+          <span class="block text-[10px] font-700 uppercase tracking-wide text-sage-700">Outlet price</span>
+          <span class="font-display text-xl font-700 leading-none text-brass-700">${formatPrice(item.price)}</span>
+        </span>
       </div>
       <p class="mt-1 text-xs font-600 uppercase tracking-wide text-ink-soft/70">${esc(item.category)} · ${esc(item.style)}</p>
       <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-soft">${esc(item.blurb)}</p>

@@ -77,6 +77,10 @@ const furnitureStore = {
     <script type="application/ld+json" set:html={JSON.stringify(furnitureStore)} />
   </head>
   <body>
+    <!-- Site-wide testing/demo banner (appears on every page) -->
+    <div role="status" class="bg-walnut-900 px-4 py-2 text-center text-xs font-600 text-cream sm:text-sm">
+      <span aria-hidden="true">⚠</span> This site is for testing purposes only — not a live store.
+    </div>
     <slot />
   </body>
 </html>

@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // IMPORTANT: this must match the Worker name in your Cloudflare dashboard.
+  "name": "furniture-factory-outlet-world",
+  "compatibility_date": "2026-06-01",
+  // Static site: serve the Astro build output as Workers static assets.
+  // No `main` / no SSR adapter — this is a purely static deploy.
+  "assets": {
+    "directory": "./dist"
+  }
+}
